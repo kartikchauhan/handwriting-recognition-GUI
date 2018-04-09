@@ -28,6 +28,7 @@
 import random
 import numpy as np
 import mnist_loader
+import mnist_custom_loader
 import sys
 import Tkinter
 
@@ -157,6 +158,12 @@ def sigmoid_prime(z):
     """Derivative of the sigmoid function."""
     return sigmoid(z)*(1-sigmoid(z))
 
+
+
+global training_data
+global validation_data
+global test_data
+
 def write(string):
     global text_box
     text_box.config(state=Tkinter.NORMAL)
@@ -164,15 +171,71 @@ def write(string):
     text_box.see("end")
     text_box.config(state=Tkinter.DISABLED)
 
+def load_dataset():
+    global training_data
+    global validation_data
+    global test_data
+    training_data, validation_data, test_data = mnist_loader.load_data_wrapper()
+    write("Dataset successfully loaded\n")    
+
+def test_MNIST_data():
+    global training_data
+    global validation_data
+    global test_data
+    net = Network([784, 30, 10])
+    net.SGD(training_data, 1, 10, 3.0, test_data=test_data)
+
+def load_custom_dataset():
+    global training_data
+    global test_data
+    training_data, test_data = mnist_custom_loader.load_data_wrapper()
+    write("Custom dataset successfully loaded\n")    
+
+def test_custom_data():
+    global training_data
+    global test_data
+    net = Network([784, 30, 10])
+    net.SGD(training_data, 10, 10, 3.0, test_data=test_data)
+
+def close_window(): 
+    root.destroy()
+
+def center_window(width=300, height=200):
+    # get screen width and height
+    screen_width = root.winfo_screenwidth()
+    screen_height = root.winfo_screenheight()
+
+    # calculate position x and y coordinates
+    x = (screen_width/2) - (width/2)
+    y = (screen_height/2) - (height/2)
+    root.geometry('%dx%d+%d+%d' % (width, height, x, y))
+
 root = Tkinter.Tk()
 
-text_box = Tkinter.Text(root, state=Tkinter.DISABLED)
-text_box.grid(row=0, column=0, columnspan=4)
+center_window(800, 600)
 
-training_data, validation_data, test_data = mnist_loader.load_data_wrapper()
-write("dataset Successfully loaded")
-net = Network([784, 30, 10])
-net.SGD(training_data, 1, 10, 3.0, test_data=test_data)
+
+text_box = Tkinter.Text(root, state=Tkinter.DISABLED)
+text_box.grid(row=0, column=1, columnspan=8)
+
+button_1 = Tkinter.Button(root, text="Load Dataset", command=load_dataset)
+button_1.grid(row=1, column=1)
+
+button_2 = Tkinter.Button(root, text="Test MNIST dataset", command=test_MNIST_data)
+button_2.grid(row=1, column=2)
+
+button_3 = Tkinter.Button(root, text="Load Custom Dataset", command=load_custom_dataset)
+button_3.grid(row=1, column=3)
+
+button_4 = Tkinter.Button(root, text="Test Custom Dataset", command=test_custom_data)
+button_4.grid(row=1, column=4)
+
+button_5 = Tkinter.Button(root, text="Exit", command=close_window)
+button_5.grid(row=1, column=5)
+
+
+# net = Network([784, 30, 10])
+# net.SGD(training_data, 1, 10, 3.0, test_data=test_data)
 
 
 root.mainloop()
