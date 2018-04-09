@@ -170,9 +170,8 @@ text_box = Tkinter.Text(root, state=Tkinter.DISABLED)
 text_box.grid(row=0, column=0, columnspan=4)
 
 training_data, validation_data, test_data = mnist_loader.load_data_wrapper()
-write("dataset Successfully loaded")
 net = Network([784, 30, 10])
-net.SGD(training_data, 1, 10, 3.0, test_data=test_data)
+net.SGD(training_data, 10, 10, 3.0, test_data=test_data)
 
 
 root.mainloop()

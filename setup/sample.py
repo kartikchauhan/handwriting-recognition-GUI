@@ -38,3 +38,22 @@ class TextRedirector(object):
 
 app = ExampleApp()
 app.mainloop()
+
+# import Tkinter
+# import sys
+
+# def write(string):
+#     text_box.config(state=Tkinter.NORMAL)
+#     text_box.insert("end", string + "\n")
+#     text_box.see("end")
+#     text_box.config(state=Tkinter.DISABLED)
+
+# root = Tkinter.Tk()
+
+# text_box = Tkinter.Text(root, state=Tkinter.DISABLED)
+# text_box.grid(row=0, column=0, columnspan=4)
+
+# for i in range(0, 10):
+#     write("i")
+
+# root.mainloop()
