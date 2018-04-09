@@ -41,11 +41,6 @@ def load_data():
     """
     f = gzip.open('/home/killwithme/Desktop/projects/handwriting-recognition-installer/setup/mnist.pkl.gz', 'rb')
     training_data, validation_data, test_data = cPickle.load(f)
-    print((training_data[1].shape))
-
-    # print(type(training_data[1]))
-    # print(validation_data)
-    # print(test_data)
     f.close()
     return (training_data, validation_data, test_data)
 
@@ -73,12 +68,10 @@ def load_data_wrapper():
     tr_d, va_d, te_d = load_data()
     training_inputs = [np.reshape(x, (784, 1)) for x in tr_d[0]]
     training_results = [vectorized_result(y) for y in tr_d[1]]
-    print((tr_d[1].shape))
     training_data = zip(training_inputs, training_results)
     validation_inputs = [np.reshape(x, (784, 1)) for x in va_d[0]]
     validation_data = zip(validation_inputs, va_d[1])
     test_inputs = [np.reshape(x, (784, 1)) for x in te_d[0]]
-    print((te_d[1].shape))
 
     test_data = zip(test_inputs, te_d[1])
     return (training_data, validation_data, test_data)

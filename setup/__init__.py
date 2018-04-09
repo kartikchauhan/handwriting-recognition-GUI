@@ -23,11 +23,12 @@
 
 # print(net.weights[1])
 
-import random
-
 # Third-party libraries
+
+import random
 import numpy as np
 import mnist_custom_loader
+import sys
 
 class Network(object):
 
@@ -153,11 +154,10 @@ def sigmoid_prime(z):
     """Derivative of the sigmoid function."""
     return sigmoid(z)*(1-sigmoid(z))
 
+# training_data, test_data = mnist_custom_loader.load_data_wrapper()
+# net = Network([784, 30, 10])
+# net.SGD(training_data, 30, 10, 3.0, test_data=test_data)
 
-training_data, test_data = mnist_custom_loader.load_data_wrapper()
-net = Network([784, 30, 10])
-net.SGD(training_data, 30, 10, 3.0, test_data=test_data)
-
-print("Successfully trained. End of application")
+# print("Successfully trained. End of application")
 
 input("Press Enter to close.")
